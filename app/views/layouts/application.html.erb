@@ -23,6 +23,10 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to "Home", root_path %>
+      <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger", data: {turbo_confirm: "Are You sure want to Logout" } if user_signed_in?%>
+    </nav>
     <%= yield %>
   </body>
 </html>

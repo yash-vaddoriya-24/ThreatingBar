@@ -36,7 +36,7 @@
 !/app/assets/builds/.keep
 /public/assets
 
-# Ignore CI service files.
+# Ignore CI services files.
 /.github
 
 # Ignore Kamal files.
