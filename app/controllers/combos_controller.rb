@@ -97,9 +97,9 @@ class CombosController < ApplicationController
 
   def calculate_total_price(combo)
     service = Service.find(combo.service_id)
-    actual_amount = service.price * combo.count
-    discount_amount = actual_amount * (combo.discount.to_f / 100)
-    combo.total_price = actual_amount - discount_amount
+    # actual_amount = service.price * combo.count
+    # discount_amount = actual_amount * (combo.discount.to_f / 100)
+    combo.total_price = service.price - discount_amount
   end
 
 end

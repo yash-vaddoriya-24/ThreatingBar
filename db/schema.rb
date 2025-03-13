@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_12_152254) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_13_091641) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,10 +46,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_152254) do
   end
 
   create_table "redeems", force: :cascade do |t|
-    t.bigint "customer_combs_id", null: false
+    t.bigint "customer_comb_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_combs_id"], name: "index_redeems_on_customer_combs_id"
+    t.index ["customer_comb_id"], name: "index_redeems_on_customer_comb_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -75,5 +75,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_152254) do
   add_foreign_key "combos", "users"
   add_foreign_key "customer_combs", "combos"
   add_foreign_key "customer_combs", "customers"
-  add_foreign_key "redeems", "customer_combs", column: "customer_combs_id"
+  add_foreign_key "redeems", "customer_combs"
 end

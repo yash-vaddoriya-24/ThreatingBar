@@ -23,9 +23,17 @@ Rails.application.routes.draw do
   resources :services
   resources :combos do
     collection do
-      get "select_combos"      # Page to select combos
-      get "assign_customer"    # Page to select customer
-      post "assign"            # Action to save the assignment
+      get "select_combos"
+      get "assign_customer"
+      post "assign"
+    end
+  end
+  resources :redeems, only: [ :index ] do
+    collection do
+      get "select_customer"
+      get "show_customer_combos"
+      post "redeem_combo"
+      delete "delete_combo"
     end
   end
 

@@ -1,3 +1,3 @@
 class Redeem < ApplicationRecord
-  belongs_to :customer_combo, counter_cache: true
+  belongs_to :customer_comb, required: true
 end

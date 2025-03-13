@@ -2,7 +2,7 @@
   <td><%= service.name %></td>
   <td><%= number_to_currency(service.price) %></td>
   <td>
-    <%= link_to "Edit", edit_service_path(service), data: { turbo_frame: "service_form" } %>
+    <%#= link_to "Edit", edit_service_path(service), data: { turbo_frame: "service_form" } %>
     <%= button_to "Delete", service_path(service), method: :delete,
                   data: { controller: "service", action: "turbo:submit-end->service#deleteService", turbo_confirm: "Are you sure?" } %>
 

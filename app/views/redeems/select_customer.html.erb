@@ -1,0 +1,12 @@
+<h1>Select a Customer</h1>
+
+<%= form_with url: show_customer_combos_redeems_path, method: :get, local: true do %>
+  <div>
+    <%= label_tag :customer_id, "Select Customer" %>
+    <%= select_tag :customer_id, options_from_collection_for_select(@customers, :id, lambda { |c| "#{c.name} (#{c.phone_no})" }), prompt: "Choose a Customer", required: true %>
+  </div>
+
+  <div>
+    <%= submit_tag "View Combos", class: "btn btn-primary" %>
+  </div>
+<% end %>
