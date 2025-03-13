@@ -1,0 +1,19 @@
+<turbo-frame id="customer_table">
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @customers.present? %>
+      <%= render @customers %> <%# Ensure this line is correctly rendering customer records %>
+    <% else %>
+      <%= render "customers/flash" %>
+    <% end %>
+    </tbody>
+  </table>
+</turbo-frame>

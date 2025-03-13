@@ -9,7 +9,11 @@
     </tr>
     </thead>
     <tbody>
-    <%= render @services %>
+      <% if @services.present? %>
+        <%= render @services %>
+      <% else %>
+        <%= render "services/notice" %>>
+      <% end %>
     </tbody>
   </table>
 </turbo-frame>
