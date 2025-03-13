@@ -1,0 +1,13 @@
+<h1>Select Combos to Assign</h1>
+
+<%= form_with url: assign_customer_combos_path, method: :get do %>
+  <% @combos.each do |combo| %>
+    <label>
+      <%= check_box_tag "combo_ids[]", combo.id %> <%= combo.service.name %> - $<%= combo.total_price %>
+    </label>
+    <br>
+  <% end %>
+
+  <%= submit_tag "Next: Select Customer" %>
+<% end %>
+

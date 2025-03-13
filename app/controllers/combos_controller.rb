@@ -9,6 +9,24 @@ class CombosController < ApplicationController
   def new
   end
 
+  def assign_customer
+    @customers = Customer.all  # Fetch all customers
+    @combo_ids = params[:combo_ids] || []   # Get selected combo IDs
+  end
+
+  def choose_customer
+    if params[:combo_ids].present?
+      session[:selected_combos] = params[:combo_ids] # Store in session
+      redirect_to assign_customer_path
+    else
+      flash[:alert] = "Please select at least one combo."
+      redirect_to select_combos_path
+    end
+  end
+
+  def select_combos
+    @combos = Combo.all # Fetch only unassigned combos
+  end
   def create
     @combo = Combo.new(combo_params)
     calculate_total_price(@combo) # Auto-calculate total price
@@ -43,8 +61,25 @@ class CombosController < ApplicationController
     redirect_to combos_path, notice: "Combo deleted successfully."
   end
 
-  private
+  def assign
+    customer_id = params[:customer_id]
+    combo_ids = params[:combo_ids] || []
 
+    if customer_id.blank? || combo_ids.empty?
+      redirect_to assign_customer_combos_path, alert: "Customer and combos must be selected."
+      return
+    end
+
+    combo_ids.each do |combo_id|
+      CustomerComb.create(customer_id: customer_id, combo_id: combo_id)
+      # flash.now[:notice] = "Combo Assign successfully."
+    end
+
+    redirect_to root_path, notice: "Combos assigned successfully."
+  end
+
+
+  private
   def set_combo
     @combo = Combo.find_by(id: params[:id])
     unless @combo
@@ -66,4 +101,5 @@ class CombosController < ApplicationController
     discount_amount = actual_amount * (combo.discount.to_f / 100)
     combo.total_price = actual_amount - discount_amount
   end
+
 end
