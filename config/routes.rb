@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "redeems/index"
   get "combos/index"
   devise_for :users
   # get "users/index"
@@ -20,5 +21,18 @@ Rails.application.routes.draw do
   resources :customers
   resources :users
   resources :services
-  resources :combos
+  resources :combos do
+    collection do
+      get "select_combos"      # Page to select combos
+      get "assign_customer"    # Page to select customer
+      post "assign"            # Action to save the assignment
+    end
+  end
+
+  # This removes the show route
+
+  get "combos/select_combos", to: "combos#select_combos", as: "select_combos"
+  post "combos/choose_customer", to: "combos#choose_customer", as: "choose_customer"
+  get "combos/assign_customer", to: "combos#assign_customer", as: "assign_customer"
+  post "combos/assign", to: "combos#assign_combo", as: "assign_combo"
 end
