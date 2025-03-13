@@ -1,0 +1,15 @@
+<%= render "notice" %>
+<turbo-frame id="services_table">
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= render @services %>
+    </tbody>
+  </table>
+</turbo-frame>

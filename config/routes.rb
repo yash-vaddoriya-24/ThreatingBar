@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "users#index"
-  get '/change_password', to: 'users#change_password', as: :change_password
-  patch '/update_password', to: 'users#update_password', as: :update_password
+  get "/change_password", to: "users#change_password", as: :change_password
+  patch "/update_password", to: "users#update_password", as: :update_password
 
   resources :users
   resources :services
