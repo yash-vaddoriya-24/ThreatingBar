@@ -1,0 +1,24 @@
+<turbo-frame id="combo_form">
+  <%= form_with model: @combo, local: true, id: "combo_form", data: { controller: "combo", action: "turbo:submit-end->combo#refreshPage" } do |f| %>
+    <div>
+      <%= f.label :service_id, "Service Name" %>
+      <%= f.collection_select :service_id, Service.all, :id, :name, prompt: "Select a service", required: true %>
+    </div>
+
+    <div>
+      <%= f.label :count, "Count" %>
+      <%= f.number_field :count, min: 1, required: true, value: @combo.count %>
+    </div>
+
+    <div>
+      <%= f.label :discount, "Discount (%)" %>
+      <%= f.number_field :discount, step: 0.01, min: 0, max: 100, required: true, value: @combo.discount, id: "discountField" %>
+    </div>
+
+    <%= f.hidden_field :user_id, value: current_user.id %>
+
+    <div>
+      <%= f.submit @combo.new_record? ? "Create Combo" : "Update Combo" %>
+    </div>
+  <% end %>
+</turbo-frame>

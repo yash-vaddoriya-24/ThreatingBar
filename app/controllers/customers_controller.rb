@@ -16,7 +16,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
     if @customer.save
       flash.now[:notice] = "Customer created successfully."
-      redirect_to customers_path, notice: "Customer created successfully."
+      redirect_to customers_path
     else
       flash.now[:alert] = @customer.errors.full_messages.to_sentence
       render :index, status: :unprocessable_entity
@@ -26,9 +26,11 @@ class CustomersController < ApplicationController
   # Update an existing customer
   def update
     if @customer.update(customer_params)
-      redirect_to customers_path, notice: "Customer updated successfully."
+      flash.now[:notice] = "Combo Updated successfully."
+      redirect_to customers_path
     else
-      render :edit, status: :unprocessable_entity, notice: @customer.errors.full_messages.to_sentence
+      flash.now[:alert] = @customer.errors.full_messages.to_sentence
+      render :edit, status: :unprocessable_entity
     end
   end
 
