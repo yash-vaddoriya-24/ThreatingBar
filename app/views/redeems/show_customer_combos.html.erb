@@ -1,0 +1,29 @@
+<h1>Combos for <%= @customer.name %></h1>
+
+<% if @customer_combs.any? %>
+  <table>
+    <thead>
+    <tr>
+      <th>Service Name</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @customer_combs.each do |customer_comb| %>
+      <tr>
+        <td><%= customer_comb.combo.service.name if customer_comb.combo&.service.present? %></td>
+        <td>
+          <%= form_with url: redeem_combo_redeems_path, method: :post, local: true do %>
+            <%= hidden_field_tag :customer_comb_id, customer_comb.id %>
+            <%= submit_tag "Redeem", class: "btn btn-success" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No available combos for this customer.</p>
+<% end %>
+
+<%= link_to "Back", select_customer_redeems_path, class: "btn btn-secondary" %>

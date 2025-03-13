@@ -13,12 +13,16 @@ class ServicesController < ApplicationController
 
   def create
     @service = Service.new(service_params)
+
     if @service.save
-      redirect_to services_path, notice: "Service was successfully created."
+      redirect_to services_path, notice: "Service created successfully."
     else
-      render :index, status: :unprocessable_entity, notice: @service.errors.full_messages.to_sentence
+      puts "⚠️ Service Save Failed: #{@service.errors.full_messages}" # Debugging
+      flash[:alert] = @service.errors.full_messages.to_sentence
+      render :index, status: :unprocessable_entity
     end
   end
+
 
   def edit
   end
@@ -53,4 +57,5 @@ class ServicesController < ApplicationController
   def set_service
     @service = Service.find(params[:id])
   end
+
 end

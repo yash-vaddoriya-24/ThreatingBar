@@ -1,6 +1,6 @@
 class Customer < ApplicationRecord
-  has_many :customer_combos
-  has_many :combos, through: :customer_combos
+  has_many :customer_combs
+  has_many :combos, through: :customer_combs
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
