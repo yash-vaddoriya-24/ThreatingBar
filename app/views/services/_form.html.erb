@@ -1,4 +1,3 @@
-<% existing_services = Service.pluck(:name) %>
 <turbo-frame id="service_form" data-controller="service">
   <% existing_service_names = Service.pluck(:name) - [@service.name] %>
 

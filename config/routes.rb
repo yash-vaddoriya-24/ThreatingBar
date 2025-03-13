@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get "/change_password", to: "users#change_password", as: :change_password
   patch "/update_password", to: "users#update_password", as: :update_password
 
+  resources :customers
   resources :users
   resources :services
 end

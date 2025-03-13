@@ -1,0 +1,22 @@
+<turbo-frame id="customer_form">
+  <%= form_with model: @customer,local: true, id: "customer_form", data: { controller: "customer", action: "turbo:submit-end->customer#refreshPage" } do |f| %>
+    <div>
+      <%= f.label :name, "Customer Name" %>
+      <%= f.text_field :name, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :phone, "Phone" %>
+      <%= f.telephone_field :phone_no, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :email, "Email" %>
+      <%= f.email_field :email, required: true %>
+    </div>
+
+    <div>
+      <%= f.submit @customer.new_record? ? "Create Customer" : "Update Customer" %>
+    </div>
+  <% end %>
+</turbo-frame>

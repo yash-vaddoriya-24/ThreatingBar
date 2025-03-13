@@ -16,7 +16,7 @@ class ServicesController < ApplicationController
     if @service.save
       redirect_to services_path, notice: "Service was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      render :index, status: :unprocessable_entity, notice: @service.errors.full_messages.to_sentence
     end
   end
 
@@ -27,7 +27,7 @@ class ServicesController < ApplicationController
     if @service.update(service_params)
       redirect_to services_path, notice: "Service was successfully updated."
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity, notice: @service.errors.full_messages.to_sentence
     end
   end
 
