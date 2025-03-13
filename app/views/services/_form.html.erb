@@ -1,0 +1,26 @@
+<% existing_services = Service.pluck(:name) %>
+<turbo-frame id="service_form" data-controller="service">
+  <% existing_service_names = Service.pluck(:name) - [@service.name] %>
+
+  <%= form_with model: @service, local: true, id: "service_form", data: { controller: "service", action: "turbo:submit-end->service#refreshPage" } do |f| %>
+
+    <div>
+      <%= f.label :name, "Salon Service Name" %>
+      <%= f.select :name,
+                   Service::SERVICE_NAMES.reject { |s| existing_service_names.include?(s) }.map { |s| [s, s] },
+                   prompt: "Select a service",
+                   selected: @service.name,
+                   id: "service_name" %>  <!-- Added id="service_name" -->
+
+    </div>
+
+    <div>
+      <%= f.label :price, "Price" %>
+      <%= f.number_field :price, step: 0.01, required: true %>
+    </div>
+
+    <div>
+      <%= f.submit @service.new_record? ? "Save Service" : "Update Service" %>
+    </div>
+  <% end %>
+</turbo-frame>
