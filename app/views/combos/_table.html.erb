@@ -1,0 +1,23 @@
+<%= render "customers/flash" %>
+<turbo-frame id="combos_table">
+  <table>
+    <thead>
+    <tr>
+      <th>Service Name</th>
+      <th>Number of Services</th>
+      <th>Discount (%)</th>
+      <th>Total Price</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @combos.present? %>
+      <%= render @combos %>
+    <% else %>
+      <tr>
+        <td colspan="5"><%= render "customers/flash" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</turbo-frame>
