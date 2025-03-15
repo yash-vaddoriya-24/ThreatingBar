@@ -26,7 +26,7 @@ class CustomersController < ApplicationController
   # Update an existing customer
   def update
     if @customer.update(customer_params)
-      flash.now[:notice] = "Combo Updated successfully."
+      flash.now[:notice] = "customer Updated successfully."
       redirect_to customers_path
     else
       flash.now[:alert] = @customer.errors.full_messages.to_sentence

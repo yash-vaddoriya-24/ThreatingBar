@@ -2,7 +2,7 @@
   <%= form_with model: @combo, local: true, id: "combo_form", data: { controller: "combo", action: "turbo:submit-end->combo#refreshPage" } do |f| %>
     <div>
       <%= f.label :service_id, "Service Name" %>
-      <%= f.collection_select :service_id, Service.all, :id, :name, prompt: "Select a service", required: true %>
+      <%= f.collection_select :service_id, Service.all, :id, ->(service) { "#{service.name} - #{service.price}" }, { prompt: "Select a service" }, { required: true } %>
     </div>
 
     <div>

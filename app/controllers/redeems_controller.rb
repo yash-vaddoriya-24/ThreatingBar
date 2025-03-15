@@ -32,8 +32,6 @@ class RedeemsController < ApplicationController
     end
   end
 
-
-
   def redeem_combo
     customer_comb = CustomerComb.find_by(id: params[:customer_comb_id])
 

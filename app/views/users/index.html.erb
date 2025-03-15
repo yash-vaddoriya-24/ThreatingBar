@@ -1,8 +1,9 @@
 <h1> Welcome to the Page</h1>
-<%= render "services/notice" %>
+<%#= render "services/notice" %>
+<%= render "customers/flash" %>
 <%= link_to "Password Change", change_password_path %><br>
 <%= link_to "Add Service", services_path %><br>
 <%= link_to "Add Customer", customers_path %><br>
 <%= link_to "Add Combo", combos_path %><br>
-<%= link_to "Assign Combo", select_combos_path %><br>
+<%= link_to "Assign Combo", choose_customer_path %><br>
 <%= link_to "Redeem Combo",  select_customer_redeems_path%>

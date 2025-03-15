@@ -1,3 +1,4 @@
+<%= render "customers/flash" %>
 <turbo-frame id="customer_form">
   <%= form_with model: @customer,local: true, id: "customer_form", data: { controller: "customer", action: "turbo:submit-end->customer#refreshPage" } do |f| %>
     <div>

@@ -9,23 +9,28 @@ class CombosController < ApplicationController
   def new
   end
 
+  def show
+    redirect_to assign_customer_combos_path
+  end
   def assign_customer
     @customers = Customer.all  # Fetch all customers
     @combo_ids = params[:combo_ids] || []   # Get selected combo IDs
   end
 
   def choose_customer
-    if params[:combo_ids].present?
-      session[:selected_combos] = params[:combo_ids] # Store in session
-      redirect_to assign_customer_path
-    else
-      flash[:alert] = "Please select at least one combo."
-      redirect_to select_combos_path
-    end
+    @customers = Customer.all
+    # if params[:combo_ids].present?
+    #   session[:selected_combos] = params[:combo_ids] # Store in session
+    #   redirect_to assign_customer_path
+    # else
+    #   flash[:alert] = "Please select at least one combo."
+    #   redirect_to select_combos_path
+    # end
   end
 
   def select_combos
-    @combos = Combo.all # Fetch only unassigned combos
+    @combos = Combo.all
+    @customer = Customer.find(params[:customer_id])# Fetch only unassigned combos
   end
   def create
     @combo = Combo.new(combo_params)
@@ -99,7 +104,7 @@ class CombosController < ApplicationController
     service = Service.find(combo.service_id)
     # actual_amount = service.price * combo.count
     # discount_amount = actual_amount * (combo.discount.to_f / 100)
-    combo.total_price = service.price - discount_amount
+    combo.total_price = service.price - combo.discount
   end
 
 end

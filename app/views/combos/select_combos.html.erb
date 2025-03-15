@@ -1,6 +1,6 @@
 <h1>Select Combos to Assign</h1>
 
-<%= form_with url: assign_customer_combos_path, method: :get do %>
+<%= form_with url: assign_combo_path, method: :post do %>
   <% @combos.each do |combo| %>
     <label>
       <%= check_box_tag "combo_ids[]", combo.id %> <%= combo.service.name %> - $<%= combo.total_price %>
@@ -8,6 +8,8 @@
     <br>
   <% end %>
 
-  <%= submit_tag "Next: Select Customer" %>
+  <%= hidden_field_tag "customer_id", @customer.id %>
+
+  <%= submit_tag "Assign Combo" %>
 <% end %>
 
