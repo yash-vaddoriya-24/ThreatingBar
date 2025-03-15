@@ -2,7 +2,7 @@
   <tr id="combo_<%= combo.id %>">
     <td><%= combo.service.name %></td>
     <td><%= combo.count %></td>
-    <td><%= combo.discount %></td>
+    <td>$<%= combo.discount %></td>
     <td>$<%= combo.total_price %></td>
     <td>
       <%= link_to "Edit", edit_combo_path(combo), data: { turbo_frame: "combo_form" } %>

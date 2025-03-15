@@ -1,14 +1,13 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!
-  before_action :new_service, only: [:new, :index]
-  before_action :set_service, only: [:edit, :update, :destroy]
+  before_action :set_service, only: [ :edit, :update, :destroy ]
   def index
     @services = Service.all
     @service = Service.new
   end
 
-  def new
-    @service = Service.new
+  def show
+    redirect_to services_path
   end
 
   def create
@@ -36,7 +35,6 @@ class ServicesController < ApplicationController
   end
 
   def destroy
-    @service = Service.find(params[:id])
     @service.destroy
 
     respond_to do |format|
@@ -50,12 +48,7 @@ class ServicesController < ApplicationController
     params.require(:service).permit(:name, :price)
   end
 
-  def new_service
-    @service = Service.new
-  end
-
   def set_service
     @service = Service.find(params[:id])
   end
-
 end

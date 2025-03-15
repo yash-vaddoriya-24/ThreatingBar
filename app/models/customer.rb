@@ -1,5 +1,5 @@
 class Customer < ApplicationRecord
-  has_many :customer_combs
+  has_many :customer_combs, dependent: :destroy
   has_many :combos, through: :customer_combs
 
   validates :name, presence: true

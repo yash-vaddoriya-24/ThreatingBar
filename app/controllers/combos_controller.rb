@@ -1,12 +1,9 @@
 class CombosController < ApplicationController
   before_action :authenticate_user!
   before_action :set_combo, only: %i[ edit update destroy]
-  before_action :new_combo, only: %i[ index new ]
   def index
     @combos = Combo.all
-  end
-
-  def new
+    @combo = Combo.new
   end
 
   def show
@@ -14,20 +11,7 @@ class CombosController < ApplicationController
   end
   def assign_customer
     @customers = Customer.all  # Fetch all customers
-    @combo_ids = params[:combo_ids] || []   # Get selected combo IDs
   end
-
-  def choose_customer
-    @customers = Customer.all
-    # if params[:combo_ids].present?
-    #   session[:selected_combos] = params[:combo_ids] # Store in session
-    #   redirect_to assign_customer_path
-    # else
-    #   flash[:alert] = "Please select at least one combo."
-    #   redirect_to select_combos_path
-    # end
-  end
-
   def select_combos
     @combos = Combo.all
     @customer = Customer.find(params[:customer_id])# Fetch only unassigned combos
@@ -49,15 +33,15 @@ class CombosController < ApplicationController
   end
 
   def update
-    @combo.assign_attributes(combo_params)  # Assign new attributes first
-    calculate_total_price(@combo)  # Recalculate total price
+    @combo.assign_attributes(combo_params)
+    calculate_total_price(@combo)
 
-    if @combo.save  # Save the updated combo
-      flash.now[:notice] = "Combo updated successfully."
+    if @combo.save
+      flash[:notice] = "Combo updated successfully."
       redirect_to combos_path
     else
-      flash.now[:alert] = @combo.errors.full_messages.to_sentence
-      render :edit, status: :unprocessable_entity
+      flash[:alert] = @combo.errors.full_messages.to_sentence
+      redirect_to edit_combo_path(@combo), status: :unprocessable_entity
     end
   end
 
@@ -77,7 +61,7 @@ class CombosController < ApplicationController
 
     combo_ids.each do |combo_id|
       CustomerComb.create(customer_id: customer_id, combo_id: combo_id)
-      # flash.now[:notice] = "Combo Assign successfully."
+      flash.now[:notice] = "Combo Assign successfully."
     end
 
     redirect_to root_path, notice: "Combos assigned successfully."
@@ -96,15 +80,9 @@ class CombosController < ApplicationController
     params.require(:combo).permit(:service_id, :count, :discount, :user_id)
   end
 
-  def new_combo
-    @combo = Combo.new
-  end
-
   def calculate_total_price(combo)
     service = Service.find(combo.service_id)
-    # actual_amount = service.price * combo.count
-    # discount_amount = actual_amount * (combo.discount.to_f / 100)
-    combo.total_price = service.price - combo.discount
+    combo.total_price = combo.count * service.price - combo.discount
+    combo.save
   end
-
 end

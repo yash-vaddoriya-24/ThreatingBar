@@ -1,6 +1,6 @@
 class Combo < ApplicationRecord
   belongs_to :service
-  has_many :customer_combs
+  has_many :customer_combs, dependent: :destroy
   has_many :customers, through: :customer_combs
   belongs_to :user
   validates :count, numericality: { only_integer: true, greater_than: 0 }

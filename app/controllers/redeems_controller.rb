@@ -1,10 +1,4 @@
 class RedeemsController < ApplicationController
-  def index
-    @customers = Customer.all
-    @combos = Combo.all
-    @combo_ids = params[:combo_ids] || []  # Ensure @combo_ids is an array
-  end
-
   def select_customer
     @customers = Customer.all
   end
@@ -57,6 +51,6 @@ class RedeemsController < ApplicationController
 
     CustomerComb.find_by(customer_id: customer_id, combo_id: combo_id)&.destroy
 
-    redirect_to show_customer_combos_redeems_path(customer_id: customer_id), notice: "Combo Deleted!"
+    redirect_to show_customer_combos_redeems_path(customer_id: customer_id), notice: "Combo Deleted for Customer!"
   end
 end

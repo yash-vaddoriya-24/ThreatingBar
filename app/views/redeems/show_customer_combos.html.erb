@@ -1,3 +1,4 @@
+<%= render "services/notice" %>
 <h1>Combos for <%= @customer.name %></h1>
 
 <% if @customer_combs.any? %>
@@ -5,7 +6,8 @@
     <thead>
     <tr>
       <th>Service Name</th>
-      <th>Actions</th>
+      <th>Redeem</th>
+      <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -13,10 +15,17 @@
       <tr>
         <td><%= customer_comb.combo.service.name if customer_comb.combo&.service.present? %></td>
         <td>
+          <!-- Redeem Button -->
           <%= form_with url: redeem_combo_redeems_path, method: :post, local: true do %>
             <%= hidden_field_tag :customer_comb_id, customer_comb.id %>
             <%= submit_tag "Redeem", class: "btn btn-success" %>
           <% end %>
+        </td>
+        <td>
+          <%= button_to "Delete", delete_combo_redeems_path, method: :delete, params: {
+            customer_id: @customer.id,
+            combo_id: customer_comb.combo.id,
+          }, class: "btn btn-danger" %>
         </td>
       </tr>
     <% end %>

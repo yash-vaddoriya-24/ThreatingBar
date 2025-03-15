@@ -1,3 +1,4 @@
+<%= render "services/notice" %>
 <turbo-frame id="service_form" data-controller="service">
   <%= form_with model: @service, local: true, id: "service_form", data: { controller: "service", action: "turbo:submit-end->service#refreshPage" } do |f| %>
 

@@ -4,12 +4,7 @@
   <div>
     <%= label_tag :customer_id, "Select Customer" %>
     <%= select_tag :customer_id, options_from_collection_for_select(@customers, :id, lambda { |c| "#{c.name} (#{c.phone_no})" }), prompt: "Choose a Customer", required: true %>
-
   </div>
-
-  <% @combo_ids.each do |combo_id| %>
-    <%= hidden_field_tag "combo_ids[]", combo_id %>
-  <% end %>
 
   <div>
     <%= submit_tag "Next: Select Combo", class: "btn btn-success" %>

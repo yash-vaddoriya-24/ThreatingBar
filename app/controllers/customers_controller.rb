@@ -1,11 +1,8 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [ :update, :destroy, :edit ]
-  before_action :new_customer, only: [ :index, :new ]
   def index
     @customers = Customer.all
-  end
-
-  def new
+    @customer = Customer.new
   end
 
   def edit
@@ -50,9 +47,5 @@ class CustomersController < ApplicationController
   # Find customer before update or destroy
   def set_customer
     @customer = Customer.find(params[:id])
-  end
-
-  def new_customer
-    @customer = Customer.new
   end
 end
