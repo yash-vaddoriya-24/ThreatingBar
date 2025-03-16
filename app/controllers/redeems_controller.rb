@@ -16,15 +16,20 @@ class RedeemsController < ApplicationController
       return
     end
 
-    # Fetch all customer combos
     customer_combs = @customer.customer_combs.includes(:combo)
 
+    # Get redemption counts for each customer_comb
+    @redeem_counts = Redeem.where(customer_comb_id: customer_combs.pluck(:id))
+                           .group(:customer_comb_id)
+                           .count
+    puts @redeem_counts
     # Filter out fully redeemed combos
     @customer_combs = customer_combs.reject do |customer_comb|
-      redeem_count = Redeem.where(customer_comb_id: customer_comb.id).count
-      redeem_count >= customer_comb.combo.count # Remove if redeemed count is >= combo count
+      redeem_count = @redeem_counts[customer_comb.id] || 0
+      redeem_count >= customer_comb.combo.count
     end
   end
+
 
   def redeem_combo
     customer_comb = CustomerComb.find_by(id: params[:customer_comb_id])
@@ -37,7 +42,8 @@ class RedeemsController < ApplicationController
     @redeem = Redeem.new(customer_comb_id: customer_comb.id)
 
     if @redeem.save
-      redirect_to root_path, notice: "Redeem successful!"
+      RedeemMailer.redeem_confirmation(@redeem).deliver_now
+      redirect_to root_path, notice: "Redeem successful! Confirmation email sent."
     else
       puts "⚠️ Redeem Save Failed: #{@redeem.errors.full_messages}" # Log errors to console
       flash[:alert] = @redeem.errors.full_messages.to_sentence # Show error message
@@ -49,8 +55,18 @@ class RedeemsController < ApplicationController
     customer_id = params[:customer_id]
     combo_id = params[:combo_id]
 
-    CustomerComb.find_by(customer_id: customer_id, combo_id: combo_id)&.destroy
+    customer_comb = CustomerComb.find_by(customer_id: customer_id, combo_id: combo_id)
 
-    redirect_to show_customer_combos_redeems_path(customer_id: customer_id), notice: "Combo Deleted for Customer!"
+    if customer_comb
+      customer = customer_comb.customer
+      combo = customer_comb.combo
+      customer_comb.destroy
+
+      ComboMailer.combo_deleted_notification(customer, combo).deliver_now
+
+      redirect_to show_customer_combos_redeems_path(customer_id: customer_id), notice: "Combo Deleted for Customer! Email Sent."
+    else
+      redirect_to show_customer_combos_redeems_path(customer_id: customer_id), alert: "Combo not found!"
+    end
   end
 end
