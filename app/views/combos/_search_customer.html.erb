@@ -1,0 +1,13 @@
+<%= search_form_for @q, url: assign_customer_combos_path, method: :get, class: "search-form" do |f| %>
+  <div class="form-group">
+    <%= f.label :name_or_phone_no_or_email_cont, "Search Customer" %>
+    <%= f.text_field :name_or_phone_no_or_email_cont, class: "form-control", placeholder: "Enter customer name, phone, or email" %>
+  </div>
+
+  <!-- Preserve action_type in the search -->
+  <%= hidden_field_tag :type, params[:type] %>
+
+  <div class="form-group">
+    <%= f.submit "Search", class: "btn btn-primary" %>
+  </div>
+<% end %>

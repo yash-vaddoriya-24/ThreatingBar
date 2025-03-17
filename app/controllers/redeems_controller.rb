@@ -1,8 +1,4 @@
 class RedeemsController < ApplicationController
-  def select_customer
-    @customers = Customer.all
-  end
-
   def show_customer_combos
     if params[:customer_id].blank?
       redirect_to redeems_path, alert: "Customer ID is missing."
