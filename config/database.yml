@@ -5,7 +5,8 @@ default: &default
   database: <%= Rails.application.credentials.dig(:database, :name) %>
   username: <%= Rails.application.credentials.dig(:database, :username) %>
   password: <%= Rails.application.credentials.dig(:database, :password) %>
-  host: localhost
+  host: localhost # Use TCP/IP instead of a Unix socket
+  port: 5432
 
 development:
   <<: *default
@@ -13,6 +14,44 @@ development:
 test:
   <<: *default
 
-
 production:
-  <<: *default
+  primary:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    database: <%= ENV["DB_NAME"] %>
+    username: <%= ENV["DB_USER_NAME"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
+    host: <%= ENV["DB_HOST"] %>
+    port: 5432
+
+  queue:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    database: <%= ENV["DB_NAME"] %>
+    username: <%= ENV["DB_USER_NAME"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
+    host: <%= ENV["DB_HOST"] %>
+    port: 5432
+
+  cable:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    database: <%= ENV["DB_NAME"] %>
+    username: <%= ENV["DB_USER_NAME"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
+    host: <%= ENV["DB_HOST"] %>
+    port: 5432
+
+  cache:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    database: <%= ENV["DB_NAME"] %>
+    username: <%= ENV["DB_USER_NAME"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
+    host: <%= ENV["DB_HOST"] %>
+    port: 5432
+
