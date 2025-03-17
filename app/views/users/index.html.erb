@@ -5,5 +5,5 @@
 <%= link_to "Add Service", services_path %><br>
 <%= link_to "Add Customer", customers_path %><br>
 <%= link_to "Add Combo", combos_path %><br>
-<%= link_to "Assign Combo", choose_customer_path %><br>
-<%= link_to "Redeem Combo",  select_customer_redeems_path%>
+<%= link_to "Assign Combo", assign_customer_combos_path(type: "assign") %><br>
+<%= link_to "Redeem Combo", assign_customer_combos_path(type: "redeem") %>
