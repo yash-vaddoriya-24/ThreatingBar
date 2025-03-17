@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   # This removes the show route
 
   get "combos/select_combos", to: "combos#select_combos", as: "select_combos"
-  post "combos/choose_customer", to: "combos#choose_customer", as: "choose_customer"
+  # post "combos/choose_customer", to: "combos#choose_customer", as: "choose_customer"
   get "combos/assign_customer", to: "combos#assign_customer", as: "assign_customer"
   post "combos/assign", to: "combos#assign_combo", as: "assign_combo"
 end

@@ -6,12 +6,14 @@ class CombosController < ApplicationController
     @combo = Combo.new
   end
 
-  def show
-    redirect_to assign_customer_combos_path
-  end
   def assign_customer
-    @customers = Customer.all  # Fetch all customers
+    @action_type = params[:type]
+    search_params = params.fetch(:q, {}).permit(:name_or_phone_no_or_email_cont)
+    @q = Customer.ransack(search_params)
+    @customers = @q.result(distinct: true)
   end
+
+
   def select_combos
     @combos = Combo.all
     @customer = Customer.find(params[:customer_id])# Fetch only unassigned combos

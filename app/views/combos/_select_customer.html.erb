@@ -1,0 +1,30 @@
+<% if @customers.any? %>
+  <%= form_with url: (@action_type == 'assign' ? select_combos_path : show_customer_combos_redeems_path), method: :get, local: true do %>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Select</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @customers.each do |customer| %>
+        <tr>
+          <td>
+            <%= radio_button_tag :customer_id, customer.id, false, required: true %>
+          </td>
+          <td><%= customer.name %></td>
+          <td><%= customer.email %></td>
+          <td><%= customer.phone_no %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= submit_tag (@action_type == 'assign' ? "Next: Select Combo" : "Next: Redeem Combo"), class: "btn btn-success mt-2" %>
+  <% end %>
+<% else %>
+  <p>No customers found. Try searching again.</p>
+<% end %>
